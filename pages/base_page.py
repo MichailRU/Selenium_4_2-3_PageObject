@@ -1,6 +1,7 @@
+import math
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, NoAlertPresentException
 
 
 # абстрактный класс с вспомогательными методами для работы с драйвером
@@ -22,3 +23,18 @@ class BasePage:
         except (NoSuchElementException, TimeoutException):
             out = False
         return out
+
+    def solve_quiz_and_get_code(self):
+        # Получение проверочного кода - метод возвращает код или False в случае ошибки
+        alert = self.browser.switch_to.alert
+        x = alert.text.split(' ')[2]
+        answer = str(math.log(abs(12 * math.sin(float(x)))))
+        alert.send_keys(answer)
+        alert.accept()
+        try:
+            alert = self.browser.switch_to.alert
+            alert_text = alert.text
+            alert.accept()
+            return alert_text
+        except NoAlertPresentException:
+            return False
