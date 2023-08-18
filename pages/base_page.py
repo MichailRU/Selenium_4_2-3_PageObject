@@ -2,6 +2,7 @@ import math
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, NoAlertPresentException
+from pages.locators import BasePageLocators
 
 
 # абстрактный класс с вспомогательными методами для работы с драйвером
@@ -11,9 +12,24 @@ class BasePage:
         self.browser = browser
         self.url = url
 
-    def open(self):
-        # Открытие необходимой страницы по url, указанному при создании экземпляра
-        self.browser.get(self.url)
+    def go_to_login_page(self):
+        # Переход на страницу login
+        login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)    # ищем элемент
+        login_link.click()                                                      # кликаем по нему
+
+    def go_to_basket_page(self):
+        # Переход на страницу basket (корзина)
+        basket_link = self.is_element_present(*BasePageLocators.BOTTOM_BASKET)
+        assert basket_link, 'Bottom basket is not presented'
+        basket_link.click()
+
+    def is_disappeared(self, *locator,  timeout=4):
+        # Метод, проверяющий, что какой-то элемент исчезает в течение заданного времени.
+        try:
+            WebDriverWait(self.browser, timeout, 1, TimeoutException).until_not(EC.presence_of_element_located(locator))
+        except TimeoutException:
+            return False
+        return True
 
     def is_element_present(self, *locator, timeout=10):
         # Проверка наличия элемента на странице. Возвращает элемент по заданному локатору.
@@ -34,13 +50,13 @@ class BasePage:
             return True
         return False
 
-    def is_disappeared(self, *locator,  timeout=4):
-        # Метод, проверяющий, что какой-то элемент исчезает в течение заданного времени.
-        try:
-            WebDriverWait(self.browser, timeout, 1, TimeoutException).until_not(EC.presence_of_element_located(locator))
-        except TimeoutException:
-            return False
-        return True
+    def open(self):
+        # Открытие необходимой страницы по url, указанному при создании экземпляра
+        self.browser.get(self.url)
+
+    def should_be_login_link(self):
+        # Проверка наличия ссылки на страницу login
+        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), 'Login link is not presented'
 
     def solve_quiz_and_get_code(self):
         # Получение проверочного кода - метод возвращает код или False в случае ошибки
