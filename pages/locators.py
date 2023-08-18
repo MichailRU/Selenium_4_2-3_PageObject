@@ -14,5 +14,6 @@ class ProductPageLocators:
     BOTTOM_BASKET_ADD = (By.CSS_SELECTOR, '#add_to_basket_form > button')
     BOOK_NAME = (By.CSS_SELECTOR, '.product_main h1')
     BOOK_PRICE = (By.CSS_SELECTOR, '.product_main .price_color')
+    SUCCESS_MESSAGE = (By.CSS_SELECTOR, '#messages > div:nth-child(1)')
     ALERT_NAME = (By.CSS_SELECTOR, '#messages > div:nth-child(1) strong')
     ALERT_PRICE = (By.CSS_SELECTOR, '#messages > div:nth-child(3) strong')

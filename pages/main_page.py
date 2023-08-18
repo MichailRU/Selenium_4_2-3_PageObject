@@ -6,7 +6,7 @@ from pages.locators import MainPageLocators
 class MainPage(BasePage):
     def should_be_login_link(self):
         # Проверка наличия ссылки
-        assert self.is_element_present(10, *MainPageLocators.LOGIN_LINK), 'Login link is not presented'
+        assert self.is_element_present(*MainPageLocators.LOGIN_LINK), 'Login link is not presented'
 
     def go_to_login_page(self):
         # Переход на страницу login
