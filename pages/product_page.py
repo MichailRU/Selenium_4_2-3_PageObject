@@ -3,11 +3,13 @@ from pages.locators import ProductPageLocators
 
 
 class ProductPage(BasePage):
-    def should_be_bottom_basket(self):    # проверка нахождения на странице товара, возврат - кнопка добавить в корзину
-        assert self.is_element_present(*ProductPageLocators.BOTTOM_BASKET_ADD), 'There is no add to cart button'
+    def add_basket(self):    # добавить в корзину - нажатие кнопки
+        self.is_element_present(*ProductPageLocators.BUTTON_BASKET_ADD).click()
+
+    def should_be_button_basket(self):    # проверка нахождения на странице товара
+        assert self.is_element_present(*ProductPageLocators.BUTTON_BASKET_ADD), 'There is no add to cart button'
         assert self.is_element_present(*ProductPageLocators.BOOK_NAME), 'No books for sale'
         assert self.is_element_present(*ProductPageLocators.BOOK_PRICE), 'There is no price of books sold'
-        return self.is_element_present(*ProductPageLocators.BOTTOM_BASKET_ADD)
 
     def should_be_correct_add_to_basket(self):    # проверка корректности добавления товара в корзину
         n1 = self.is_element_present(*ProductPageLocators.BOOK_NAME).text

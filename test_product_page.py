@@ -28,8 +28,8 @@ class TestUserAddToBasketFromProductPage:
         # Проверка функционала добавления товара в корзину
         page = ProductPage(browser, self.link)  # инициализация PageObject, передача экземпляр драйвера и url адрес
         page.open()                             # открываем страницу
-        obj = page.should_be_bottom_basket()    # проверка корректности страницы
-        obj.click()                             # кликаем по корзине
+        page.should_be_button_basket()          # проверка корректности страницы
+        page.add_basket()                       # кликаем по корзине
         page.should_be_correct_add_to_basket()  # проверка корректности добавления в корзину
 
 
@@ -60,8 +60,8 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
 def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
     page = ProductPage(browser, link)             # инициализация PageObject, передача экземпляр драйвера и url адрес
     page.open()                                   # открываем страницу
-    obj = page.should_be_bottom_basket()          # проверка корректности страницы
-    obj.click()                                   # кликаем по корзине
+    page.should_be_button_basket()                # проверка корректности страницы
+    page.add_basket()                             # кликаем по корзине
     page.should_not_be_success_message()          # проверяем что нет сообщения об успехе (False)
 
 
@@ -75,8 +75,8 @@ def test_guest_cant_see_success_message(browser):
 def test_message_disappeared_after_adding_product_to_basket(browser):
     page = ProductPage(browser, link)             # инициализация PageObject, передача экземпляр драйвера и url адрес
     page.open()                                   # открываем страницу
-    obj = page.should_be_bottom_basket()          # проверка корректности страницы
-    obj.click()                                   # кликаем по корзине
+    page.should_be_button_basket()                # проверка корректности страницы
+    page.add_basket()                             # кликаем по корзине
     page.should_disappeared_of_success_message()  # проверяем, сообщения об успехе исчезает (False)
 
 
@@ -87,8 +87,8 @@ def test_guest_can_add_product_to_basket(browser, page):
     link = f'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer{page}'
     page = ProductPage(browser, link)       # инициализация PageObject, передача экземпляр драйвера и url адрес
     page.open()                             # открываем страницу
-    obj = page.should_be_bottom_basket()    # проверка корректности страницы
-    obj.click()                             # кликаем по корзине
+    page.should_be_button_basket()          # проверка корректности страницы
+    page.add_basket()                       # кликаем по корзине
     kod = page.solve_quiz_and_get_code()    # получение проверочного кода
     page.should_be_correct_add_to_basket()  # проверка корректности добавления в корзину
     print(f'The received code = {kod}')

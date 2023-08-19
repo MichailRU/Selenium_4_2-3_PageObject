@@ -19,8 +19,8 @@ class BasePage:
 
     def go_to_basket_page(self):
         # Переход на страницу basket (корзина)
-        basket_link = self.is_element_present(*BasePageLocators.BOTTOM_BASKET)
-        assert basket_link, 'Bottom basket is not presented'
+        basket_link = self.is_element_present(*BasePageLocators.BUTTON_BASKET)
+        assert basket_link, 'Button basket is not presented'
         basket_link.click()
 
     def is_disappeared(self, *locator,  timeout=4):
